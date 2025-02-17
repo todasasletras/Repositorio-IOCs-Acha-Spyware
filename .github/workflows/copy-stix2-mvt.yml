@@ -61,5 +61,6 @@ jobs:
         else
           git commit -m 'Download STIX2 files from source repositories'
           git push
+        fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
