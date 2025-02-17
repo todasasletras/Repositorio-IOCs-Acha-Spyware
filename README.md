@@ -22,4 +22,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 
 ### Licença
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+Este projeto está licenciado sob a licença Mozilla Public License Version 2.0. Veja o arquivo LICENSE para mais detalhes.
