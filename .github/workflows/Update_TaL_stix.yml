@@ -1,0 +1,53 @@
+name: Run Generate STIX
+
+on:
+  schedule:
+    # Runs every Sunday at 00:00 UTC
+    - cron: "0 0 * * 0"
+
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r Scripts/requirements.txt
+
+      # Step 4: Run the script
+      - name: Run generate_stix.py
+        run: python Scripts/generate_stix.py
+
+      # Step 5: Upload the output file to the repository
+      - name: Upload STIX file
+        uses: actions/upload-artifact@v3
+        with:
+          name: stix-file
+          path: todas_as_letras_mobile_iocs.stix2
+
+      # Step 6: Commit and push the generated file to the mvt/Todas_as_letras/ directory
+      - name: Commit and push changes
+        run: |
+          mkdir -p mvt/Todas_as_letras/
+          mv todas_as_letras_mobile_iocs.v1.stix2 mvt/Todas_as_letras/
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add mvt/Todas_as_letras/todas_as_letras_mobile_iocs.v1.stix2
+          git commit -m "Update STIX file (automated)"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
