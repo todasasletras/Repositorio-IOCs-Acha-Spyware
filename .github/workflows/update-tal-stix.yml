@@ -28,12 +28,13 @@ jobs:
           pip install -r Scripts/requirements.txt
 
       # Step 4: Run the script
-      - name: Run generate_stix.py
+      - name: Run generate_stix.py and rename file
         run: python Scripts/generate_stix.py
+        
 
       # Step 5: Upload the output file to the repository
       - name: Upload STIX file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: stix-file
           path: todas_as_letras_mobile_iocs.stix2
@@ -41,12 +42,13 @@ jobs:
       # Step 6: Commit and push the generated file to the mvt/Todas_as_letras/ directory
       - name: Commit and push changes
         run: |
+          mv todas_as_letras_mobile_iocs.stix2 todas_as_letras_mobile_iocs.v1.stix2
           mkdir -p mvt/Todas_as_letras/
           mv todas_as_letras_mobile_iocs.v1.stix2 mvt/Todas_as_letras/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mvt/Todas_as_letras/todas_as_letras_mobile_iocs.v1.stix2
-          git commit -m "Update STIX file (automated)"
+          git add mvt/Todas_as_letras/
+          git commit -m "Update Stix TaL (automated)"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
