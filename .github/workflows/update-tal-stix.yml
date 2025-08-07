@@ -30,6 +30,8 @@ jobs:
       # Step 4: Run the script
       - name: Run generate_stix.py and rename file
         run: python Scripts/generate_stix.py
+        env:
+          MALWAREBAZAAR_API_KEY: ${{ secrets.MALWAREBAZAAR_API_KEY }}  
 
       # Step 5: Upload the output file to the repository
       - name: Upload STIX file

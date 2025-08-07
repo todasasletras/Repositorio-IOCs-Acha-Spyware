@@ -3,7 +3,9 @@ import requests
 import json
 import os
 from datetime import datetime, timezone
-import uuid  # Add this import at the top of the file
+# Add this import at the top of the file
+import uuid
+import os
 # Make sure to install stix2: pip install stix2 requests
 # Import the standard TLP_WHITE constant directly
 from stix2 import Bundle, File, Malware, Relationship, TLP_WHITE, MarkingDefinition, Indicator
@@ -26,8 +28,15 @@ def query_malware_bazaar(tag):
     """Queries Malware Bazaar API for samples associated with a specific tag."""
     print(f"[*] Querying Malware Bazaar for tag: {tag}...")
     data = {'query': 'get_taginfo', 'tag': tag}
+    # Read API key from environment variable
+    api_key = os.environ.get('MALWAREBAZAAR_API_KEY')
+    headers = {}
+    if api_key:
+        headers['Auth-Key'] = api_key
+    else:
+        print("[!] MALWAREBAZAAR_API_KEY environment variable not set. Requests will likely fail.")
     try:
-        response = requests.post(MALWARE_BAZAAR_API_URL, data=data, timeout=REQUEST_TIMEOUT)
+        response = requests.post(MALWARE_BAZAAR_API_URL, data=data, headers=headers, timeout=REQUEST_TIMEOUT)
         response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
         print(f"[+] Successfully retrieved data for tag: {tag}")
         return response.json()
