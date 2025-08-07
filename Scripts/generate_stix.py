@@ -16,7 +16,7 @@ MALWARE_BAZAAR_API_URL = "https://mb-api.abuse.ch/api/v1/"
 # Tags relevant to mobile platforms
 SEARCH_TAGS = ["android", "ios", "apk", "ipa"]
 OUTPUT_FILE = "todas_as_letras_mobile_iocs.stix2"
-REQUEST_TIMEOUT = 45 # Increased timeout for potentially large responses
+REQUEST_TIMEOUT = 55 # Increased timeout for potentially large responses
 
 # TLP:WHITE marking definition (standard for public sharing) - NO LONGER NEEDED TO CREATE MANUALLY
 # TLP_WHITE_MARKING = MarkingDefinition(

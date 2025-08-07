@@ -2,19 +2,33 @@
 
 Repositório e curadoria de indicadores de comprometimento do projeto "Ferramenta de verificação móvel".
 
-## GitHub Action: Cópia dos arquivos STIX2 do MVT
 
-Esta GitHub Action é responsável por copiar arquivos STIX2 de repositórios especificados no arquivo `indicators.yaml` do repositório `mvt-project/mvt-indicators`.
+## GitHub Action: Geração e Atualização Automática do STIX2 do Todas as Letras
+
+Esta GitHub Action executa semanalmente (todo domingo à 00:00 UTC) o script `Scripts/generate_stix.py`, que consulta a API do MalwareBazaar, gera o arquivo STIX2 com os indicadores de comprometimento para dispositivos móveis e o salva em `mvt/Todas_as_letras/todas_as_letras_mobile_iocs.v1.stix2`.
 
 ### Como funciona
 
-1. A Action é acionada em pushs para a branch `main` ou manualmente.
-2. Faz o checkout do repositório atual.
-3. Faz o checkout do repositório `mvt-indicators`.
-4. Instala as dependências necessárias (`python3-pip` e `pyyaml`).
-5. Faz o parsing do arquivo `indicators.yaml` e baixa os arquivos especificados dos repositórios GitHub.
-6. Salva os arquivos baixados em uma estrutura de diretórios baseada no proprietário do repositório dentro da pasta `mvt`.
-7. Comita e faz o push das mudanças para o repositório atual.
+1. A Action é acionada automaticamente por agendamento semanal ou manualmente via GitHub.
+2. Faz o checkout do repositório.
+3. Instala as dependências Python listadas em `Scripts/requirements.txt`.
+4. Executa o script `Scripts/generate_stix.py`.
+5. O script utiliza a variável de ambiente secreta `MALWAREBAZAAR_API_KEY` (configure em Settings > Secrets and variables > Actions).
+6. O arquivo gerado é movido para `mvt/Todas_as_letras/` e commitado automaticamente no repositório.
+
+### Como configurar a chave da API
+
+1. Obtenha sua chave de API no [MalwareBazaar](https://bazaar.abuse.ch/api/).
+2. No GitHub, acesse Settings > Secrets and variables > Actions.
+3. Adicione um novo secret chamado `MALWAREBAZAAR_API_KEY` com o valor da sua chave.
+
+### Estrutura esperada do arquivo gerado
+
+O arquivo gerado será salvo como:
+
+```
+mvt/Todas_as_letras/todas_as_letras_mobile_iocs.v1.stix2
+```
 
 ### Contribuições
 

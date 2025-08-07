@@ -45,7 +45,7 @@ jobs:
         run: |
           mv todas_as_letras_mobile_iocs.stix2 todas_as_letras_mobile_iocs.v1.stix2
           mkdir -p mvt/Todas_as_letras/
-          mv todas_as_letras_mobile_iocs.v1.stix2 mvt/Todas_as_letras/
+          mv todas_as_letras_mobile_iocs.stix2 mvt/Todas_as_letras/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add mvt/Todas_as_letras/
