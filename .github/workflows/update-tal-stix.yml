@@ -43,7 +43,7 @@ jobs:
       # Step 6: Commit and push the generated file to the mvt/Todas_as_letras/ directory
       - name: Commit and push changes
         run: |
-          mv todas_as_letras_mobile_iocs.stix2 todas_as_letras_mobile_iocs.v1.stix2
+          mv todas_as_letras_mobile_iocs.stix2 todas_as_letras_mobile_iocs.stix2
           mkdir -p mvt/Todas_as_letras/
           mv todas_as_letras_mobile_iocs.stix2 mvt/Todas_as_letras/
           git config user.name "github-actions[bot]"
