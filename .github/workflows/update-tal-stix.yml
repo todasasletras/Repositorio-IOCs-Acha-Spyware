@@ -48,8 +48,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add mvt/Todas_as_letras/
-          git commit -m "Update Stix TaL (automated)"
-          git pull --rebase origin main
-          git push
+          git commit -m "Update Stix TaL (automated)" || echo "No changes to commit"
+          git pull --rebase origin main || echo "Nothing to rebase"
+          git push || echo "Branch already up to date"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
